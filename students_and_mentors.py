@@ -15,6 +15,14 @@ class Mentor:
         self.courses_attached = []
 
 
+class Reviewer(Mentor):
+    pass
+
+
+class Lecturer(Mentor):
+    pass
+
+
 best_student = Student('Ruoy', 'Eman', 'your_gender')
 best_student.finished_courses += ['Git']
 best_student.courses_in_progress += ['Python']
