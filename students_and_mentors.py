@@ -90,7 +90,7 @@ class Lecturer(Mentor):
     self.courses_attached = []
 
   def __str__(self):
-    grades_list = (some_lecturer.grades)['Python']
+    grades_list = (self.grades)['Python']
     grade_sum = 0
     for grade in grades_list:
       grade_sum += grade
@@ -145,30 +145,31 @@ other_lecturer.courses_attached = ['Python']
 best_student.lecturer_skill(other_lecturer, 'Python', 9)
 best_student.lecturer_skill(other_lecturer, 'Python', 3)
 
-print(some_lecturer.name, some_lecturer.surname)
-print(some_lecturer.name, some_lecturer.surname, 'has grades: ',
-      some_lecturer.grades)
-print(some_lecturer.courses_attached)
+#print(some_lecturer.name, some_lecturer.surname)
+#print(some_lecturer.name, some_lecturer.surname, 'has grades: ', some_lecturer.grades)
+#print(some_lecturer.courses_attached)
 
-print(other_lecturer.name, other_lecturer.surname)
-print(other_lecturer.name, other_lecturer.surname, 'has grades: ',
-      other_lecturer.grades)
-print(other_lecturer.courses_attached)
+# print(other_lecturer.name, other_lecturer.surname)
+# print(other_lecturer.name, other_lecturer.surname, 'has grades: ',
+#       other_lecturer.grades)
+# print(other_lecturer.courses_attached)
 
-print(some_reviewer.name, some_reviewer.surname)
-print(some_reviewer.courses_attached)
+# print(some_reviewer.name, some_reviewer.surname)
+# print(some_reviewer.courses_attached)
+#
+# print(best_student.finished_courses)
+# print(best_student.courses_in_progress)
+# print(best_student.grades)
 
-print(best_student.finished_courses)
-print(best_student.courses_in_progress)
-print(best_student.grades)
-
-cool_mentor = Mentor('Some', 'Buddy')
-cool_mentor.courses_attached += ['Python']
-print(cool_mentor.courses_attached)
-
-print(some_reviewer)
-
+# cool_mentor = Mentor('Some', 'Buddy')
+# cool_mentor.courses_attached += ['Python']
+# print(cool_mentor.courses_attached)
+#
+# print(some_reviewer)
+print(other_lecturer.grades)
 print(some_lecturer)
+
+print(other_lecturer)
 
 print(best_student)
 
