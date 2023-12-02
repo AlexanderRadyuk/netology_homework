@@ -10,7 +10,7 @@ class Student:
 
   def lecturer_skill(self, lecturer, course, grade):
     if isinstance(
-        lecturer, Lecturer
+            lecturer, Lecturer
     ) and course in lecturer.courses_attached and course in self.courses_in_progress:
       if course in lecturer.grades:
         lecturer.grades[course] += [grade]
@@ -41,16 +41,49 @@ class Student:
         grades_2 += mark
       if (sum(grades_1) / len(grades_1)) > (sum(grades_2) / len(grades_2)):
         return print(
-            f'{self.name} {self.surname} круче {student.name} {student.surname}'
+          f'{self.name} {self.surname} круче {student.name} {student.surname}'
         )
       elif (sum(grades_1) / len(grades_1)) < (sum(grades_2) / len(grades_2)):
         return print(
-            f'{student.name} {student.surname} круче {self.name} {self.surname}'
+          f'{student.name} {student.surname} круче {self.name} {self.surname}'
         )
       else:
         return print('Оба молодцы')
     else:
       return print('Ошибка')
+
+  def __lt__(self, student):
+    if isinstance(student, Student):
+      first_grades = list(self.grades.values())
+      second_grades = list(student.grades.values())
+      grades_1 = []
+      grades_2 = []
+      for grade, mark in first_grades, second_grades:
+        grades_1 += grade
+        grades_2 += mark
+      if (sum(grades_1) / len(grades_1)) > (sum(grades_2) / len(grades_2)):
+        return print(
+          f'{self.name} {self.surname} имеет средний бал выше чем {student.name} {student.surname}'
+        )
+      elif (sum(grades_1) / len(grades_1)) < (sum(grades_2) / len(grades_2)):
+        return print(
+          f'{student.name} {student.surname} имеет средний бал выше чем {self.name} {self.surname}'
+        )
+      else:
+        return print('Оба молодцы')
+    else:
+      return print('Ошибка')
+
+  def student_avg_grade(self):
+    student_grades = list(self.grades.values())
+    grade_sum = 0
+    count_ = 0
+    for course in student_grades:
+      for grade in course:
+        grade_sum += grade
+        count_ += 1
+    student_avg_grade = grade_sum / count_
+    return print(f'Student {self.name} {self.surname} has average grade {student_avg_grade}')
 
 
 class Mentor:
@@ -72,7 +105,7 @@ class Reviewer(Mentor):
 
   def rate_hw(self, student, course, grade):
     if isinstance(
-        student, Student
+            student, Student
     ) and course in self.courses_attached and course in student.courses_in_progress:
       if course in student.grades:
         student.grades[course] += [grade]
@@ -97,6 +130,28 @@ class Lecturer(Mentor):
     lecturer_avg_grade = grade_sum / len(grades_list)
     return f'Name: {self.name} \nSurname: {self.surname} \nAverage grade: {lecturer_avg_grade}'
 
+  def __lt__(self, other):
+    if isinstance(other, Lecturer):
+      first_grades = list(self.grades.values())
+      second_grades = list(other.grades.values())
+      grades_1 = []
+      grades_2 = []
+      for grade, mark in zip(first_grades, second_grades):
+        grades_1 += grade
+        grades_2 += mark
+        if (sum(grades_1) / len(grades_1)) > (sum(grades_2) / len(grades_2)):
+          return print(
+            f'{self.name} {self.surname} имеет средний бал ниже чем {other.name} {other.surname}'
+          )
+        elif (sum(grades_1) / len(grades_1)) < (sum(grades_2) / len(grades_2)):
+          return print(
+            f'{other.name} {other.surname} имеет средний бал выше чем {self.name} {self.surname}'
+          )
+        else:
+          return print('Оба молодцы')
+      else:
+        return print('Ошибка')
+
   def lecturers_compare(self, lecturer):
     if isinstance(lecturer, Lecturer):
       first_grades = list(self.grades.values())
@@ -108,16 +163,27 @@ class Lecturer(Mentor):
         grades_2 += mark
       if (sum(grades_1) / len(grades_1)) > (sum(grades_2) / len(grades_2)):
         return print(
-            f'{self.name} {self.surname} круче {lecturer.name} {lecturer.surname}'
+          f'{self.name} {self.surname} круче {lecturer.name} {lecturer.surname}'
         )
       elif (sum(grades_1) / len(grades_1)) < (sum(grades_2) / len(grades_2)):
         return print(
-            f'{lecturer.name} {lecturer.surname} круче {self.name} {self.surname}'
+          f'{lecturer.name} {lecturer.surname} круче {self.name} {self.surname}'
         )
       else:
         return print('Оба молодцы')
     else:
       return print('Ошибка')
+
+  def avg_grade(self):
+    lecturer_grades = list(self.grades.values())
+    grade_sum = 0
+    count_ = 0
+    for course in lecturer_grades:
+      for grade in course:
+        grade_sum += grade
+        count_ += 1
+    lecturer_avg_grade = grade_sum / count_
+    return print(f'Lecturer {self.name} {self.surname} has average grade {lecturer_avg_grade}')
 
 
 best_student = Student('Ruoy', 'Eman', 'your_gender')
@@ -132,6 +198,12 @@ worst_student.courses_in_progress += ['Python']
 worst_student.grades['Git'] = [7, 3, 4, 5, 10]
 worst_student.grades['Python'] = [4, 6]
 
+moderate_student = Student('Jill', 'Sanders', 'your_gender')
+moderate_student.finished_courses += ['Git', 'Python']
+moderate_student.courses_in_progress += ['Python']
+moderate_student.grades['Git'] = [9, 8, 5, 7, 7]
+best_student.grades['Python'] = [8, 7]
+
 some_reviewer = Reviewer('John', 'Checker')
 some_reviewer.courses_attached = ['Git']
 
@@ -145,9 +217,14 @@ other_lecturer.courses_attached = ['Python']
 best_student.lecturer_skill(other_lecturer, 'Python', 9)
 best_student.lecturer_skill(other_lecturer, 'Python', 3)
 
-#print(some_lecturer.name, some_lecturer.surname)
-#print(some_lecturer.name, some_lecturer.surname, 'has grades: ', some_lecturer.grades)
-#print(some_lecturer.courses_attached)
+third_lecturer = Lecturer('John', 'Doe')
+third_lecturer.courses_attached = ['Python']
+best_student.lecturer_skill(third_lecturer, 'Python', 6)
+best_student.lecturer_skill(third_lecturer, 'Python', 7)
+
+# print(some_lecturer.name, some_lecturer.surname)
+# print(some_lecturer.name, some_lecturer.surname, 'has grades: ', some_lecturer.grades)
+# print(some_lecturer.courses_attached)
 
 # print(other_lecturer.name, other_lecturer.surname)
 # print(other_lecturer.name, other_lecturer.surname, 'has grades: ',
@@ -178,4 +255,19 @@ print(worst_student)
 best_student.students_compare(worst_student)
 
 some_lecturer.lecturers_compare(other_lecturer)
+
+# Операция сравнения с магическими операторами
+
+some_lecturer < other_lecturer
+
+best_student < worst_student
+
+# Подсчет средних баллов
+
+best_student.student_avg_grade()
+
+third_lecturer.avg_grade()
+
+
+
 
