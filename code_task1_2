@@ -1,0 +1,181 @@
+# cooking_book = {}
+# ingredient_content = dict.fromkeys(['ingredient_name', 'quantity', 'measure'])
+# ingredients_count = []
+# dishes_list = []
+# count_ = 0
+# idx = 0
+
+# from pprint import pprint
+
+# with open('recipe.txt') as f:
+#   file_ = f.read()
+
+# #print(file_, type(file_))
+# dishes_list = file_.split('\n')
+# # print(repr(dishes_list))
+# for dish in dishes_list:
+#   if dish.isdigit() == False and '|' not in dish:
+#     cooking_book[dish] = None
+#     name = dish
+#     continue
+#   elif dish.isdigit() == True:
+#     # print('count', dish)
+#     count_ = int(dish)
+#     continue
+#   elif '|' in dish and idx <= (count_ - 1):
+#     # print('component', repr(dish))
+#     ingredient = dish.strip().split('|')
+#     # print(ingredient)
+#     ingredient_content['ingredient_name'] = ingredient[0]
+#     ingredient_content['quantity'] = ingredient[1]
+#     ingredient_content['measure'] = ingredient[2]
+#     ingredients_count.append(ingredient_content.copy())
+#     print(ingredients_count, idx, count_)
+#     idx += 1
+
+#   elif '' in dish:
+#     cooking_book[name] = ingredients_count
+#     ingredients_count = []
+# print(cooking_book)
+
+# Конец задачи 1
+
+# print(dish)
+# print(cooking_book)
+# elif dish.isdigit():
+#   count_ = int(dish)
+#   continue
+# elif '|' in dish:
+#   # for i in range(count_):
+#   #   print(i, 'счет')
+#   f_str = dish.strip().split(" | ")
+#   # print(f_str, type(f_str))
+#   ingredient_content['ingredient_name'] = f_str[0]
+#   ingredient_content['quantity'] = f_str[1]
+#   ingredient_content['measure'] = f_str[2]
+#   ingredients_count.append(ingredient_content)
+#   continue
+# elif dish == '':
+#   print(ingredients_count)
+# Задача 2
+cook_book = {
+    'Омлет': [{
+        'ingredient_name': 'Яйцо',
+        'quantity': 2,
+        'measure': 'шт.'
+    }, {
+        'ingredient_name': 'Молоко',
+        'quantity': 100,
+        'measure': 'мл'
+    }, {
+        'ingredient_name': 'Помидор',
+        'quantity': 2,
+        'measure': 'шт'
+    }],
+    'Утка по-пекински': [{
+        'ingredient_name': 'Утка',
+        'quantity': 1,
+        'measure': 'шт'
+    }, {
+        'ingredient_name': 'Вода',
+        'quantity': 2,
+        'measure': 'л'
+    }, {
+        'ingredient_name': 'Мед',
+        'quantity': 3,
+        'measure': 'ст.л'
+    }, {
+        'ingredient_name': 'Соевый соус',
+        'quantity': 60,
+        'measure': 'мл'
+    }],
+    'Запеченный картофель': [
+        {
+            'ingredient_name': 'Картофель',
+            'quantity': 1,
+            'measure': 'кг'
+        },
+        {
+            'ingredient_name': 'Чеснок',
+            'quantity': 3,
+            'measure': 'зубч'
+        },
+        {
+            'ingredient_name': 'Сыр гауда',
+            'quantity': 100,
+            'measure': 'г'
+        },
+    ]
+}
+#++++++++++++++++
+
+
+def get_shop_list_by_dishes(dishes, person_count):
+  shop_list = {}
+  for dish in dishes:
+    for ingredient in cook_book[dish]:
+      print(ingredient)
+      print(ingredient['quantity'], ingredient['measure'])
+      new_shop_list_item = {
+          'qauntity': ingredient['quantity'],
+          'measure': ingredient['measure']
+      }
+      print(new_shop_list_item['quantity'])
+      new_shop_list_item['qauntity'] *= 2
+      print(new_shop_list_item)
+      if new_shop_list_item['ingredient_name'] not in shop_list:
+        shop_list[new_shop_list_item['ingredient_name']] = new_shop_list_item
+      else:
+        shop_list[new_shop_list_item['ingredient_name']][
+            'quantity'] += new_shop_list_item['quantity']
+  return print(shop_list)
+
+
+#+++++++++++++++++
+
+# def print_shop_list(shop_list):
+#   for shop_list_item in shop_list.values():
+#     print('{} {} {}'.format(shop_list_item['ingredient_name'], shop_list_item['quantity'], shop_list_item['measure']))
+
+# def get_shop_list_by_dishes(dishes, person_count):
+# shop_list = {}
+# for dish in dishes:
+#   for ingredient in cook_book[dish]:
+#     print(ingredient)
+#     new_shop_list_item = dict(ingredient)
+#     new_shop_list_item['quantity'] *= person_count
+#     if new_shop_list_item['ingredient_name'] not in shop_list:
+#       shop_list[new_shop_list_item['ingredient_name']] = new_shop_list_item
+#     else:
+#       shop_list[new_shop_list_item['ingredient_name']][
+#           'quantity'] += new_shop_list_item['quantity']
+# return print(shop_list)
+# print(cook_book['Омлет'][0]['quantity'], cook_book['Омлет'][0]['measure'])
+
+# get_shop_list_by_dishes(['Омлет'], 2)
+dishes = ['Омлет']
+
+person_count = 2
+
+shop_list = {}
+
+# if dishes in cook_book:
+#   print(cook_book[dishes])
+
+for dish in dishes:
+  for ingredient in cook_book[dish]:
+    print(2, ingredient['quantity'], ingredient['measure'])
+    new_shop_list_item = {
+        'qauntity': ingredient['quantity'],
+        'measure': ingredient['measure']
+    }
+    print(3, new_shop_list_item)
+    new_shop_list_item['qauntity'] *= person_count
+    print(4, new_shop_list_item)
+    ingredient_1 = ingredient['ingredient_name']
+    if ingredient_1 not in shop_list:
+      shop_list[ingredient_1] = new_shop_list_item
+      print(5, shop_list)
+    else:
+      shop_list[ingredient]['quantity'] += new_shop_list_item['quantity']
+print(shop_list)
